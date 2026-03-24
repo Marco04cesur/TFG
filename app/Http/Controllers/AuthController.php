@@ -31,6 +31,10 @@ class AuthController extends Controller {
 
     // 4. Autenticar oficialmente
     \Illuminate\Support\Facades\Auth::login($usuario);
+    Auth::login($usuario);
+
+    // Añade estas dos líneas:
+    session(['usuario_id' => $usuario->id, 'usuario' => $usuario]);
 
     // 5. Redirigir
     return redirect()->intended('/dashboard');
@@ -59,11 +63,15 @@ class AuthController extends Controller {
 
     // Dashboard
     public function dashboard() {
-        if (!session('usuario_id')) {
-            return redirect('/login');
-        }
-        return view('dashboard.index');
+    if (!Auth::check()) {  // en lugar de session('usuario_id')
+        return redirect('/login');
     }
+    // Asegura que la sesión manual también esté
+    if (!session('usuario')) {
+        session(['usuario' => Auth::user()]);
+    }
+    return view('dashboard.index');
+}
 
     // Logout
     public function logout() {
