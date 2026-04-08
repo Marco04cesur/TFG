@@ -16,8 +16,8 @@
             <label class="form-label">Sexo:</label>
             <select name="sexo" class="form-control" required>
                 <option value="">-- Selecciona --</option>
-                <option value="macho">Macho</option>
-                <option value="hembra">Hembra</option>
+                <option value="M">Macho</option>
+                <option value="H">Hembra</option>
             </select>
         </div>
         <div class="form-group mb-3">
@@ -30,7 +30,7 @@
         </div>
         <div class="form-group mb-3">
             <label class="form-label">Descripción:</label>
-            <textarea name="descripcion" class="form-control" rows="4"></textarea>
+            <textarea name="descripción" class="form-control" rows="4"></textarea>
         </div>
         <button type="submit" class="btn btn-primary">Crear Perro</button>
     </form>

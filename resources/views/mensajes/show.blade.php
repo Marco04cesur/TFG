@@ -8,8 +8,12 @@
 
 @foreach($matching->mensajes as $mensaje)
     <div class="mensaje mb-3 p-3 border rounded">
-        <strong>{{ $mensaje->usuario->nombre }}</strong>
+        <strong>{{ $mensaje->perroEmisor->nombre ?? 'Perro desconocido' }}</strong>
+        
         <p>{{ $mensaje->contenido }}</p>
-        <small>{{ $mensaje->created_at->format('d/m/Y H:i') }}</small>
+        
+        <small class="text-muted">
+            {{ $mensaje->created_at->format('d/m/Y H:i') }}
+        </small>
     </div>
 @endforeach

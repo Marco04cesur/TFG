@@ -20,6 +20,7 @@ Route::post('/register', [AuthController::class, 'register']);
 Route::middleware('auth')->group(function () {
     Route::get('/dashboard', [AuthController::class, 'dashboard'])->name('dashboard');
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+    Route::get('/matches', [MatchingController::class, 'misMatches'])->name('matching.listado');
 });
 
 // Ruta inicial
@@ -48,3 +49,5 @@ Route::post('/transacciones/{transaccion}/aceptar', [TransaccionController::clas
 
 Route::get('/transacciones/{transaccion}/calificar', [CalificacionController::class, 'create'])->name('calificaciones.create');
 Route::post('/transacciones/{transaccion}/calificar', [CalificacionController::class, 'store'])->name('calificaciones.store');
+
+Route::get('/mis-matches', [MatchingController::class, 'misMatches'])->name('matching.listado');
