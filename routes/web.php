@@ -30,6 +30,7 @@ Route::get('/', function () {
 
 Route::middleware(['auth'])->group(function () {
     Route::resource('perros', PerroController::class);
+    Route::get('/perfil/editar', [App\Http\Controllers\AuthController::class, 'editPerfil'])->name('perfil.edit');
     
 });
 

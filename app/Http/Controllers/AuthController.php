@@ -78,4 +78,15 @@ class AuthController extends Controller {
         session()->forget(['usuario_id', 'usuario']);
         return redirect('/login');
     }
+
+    // app/Http/Controllers/AuthController.php
+
+public function editPerfil()
+{
+    // Obtenemos el usuario autenticado
+    $user = auth()->user();
+    
+    // Retornamos la vista (que crearemos en el siguiente paso)
+    return view('auth.perfil', compact('user'));
+}
 }
