@@ -42,8 +42,15 @@ class PerroController extends Controller {
         return redirect()->route('perros.index')->with('success', 'Perro creado con éxito');
     }
 
-    public function show(Perro $perro) {
-        return view('perros.show', compact('perro'));
+    public function show(Perro $perro)
+    {
+        // Buscamos los perros del usuario logueado
+        // (Asegúrate de usar usuario_id o user_id según tu BD)
+        $misPerros = Perro::where('usuario_id', auth()->id())->get();
+        
+        $matching = null;
+
+        return view('perros.show', compact('perro', 'misPerros', 'matching'));
     }
 
     public function edit(Perro $perro) {

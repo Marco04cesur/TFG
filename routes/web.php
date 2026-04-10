@@ -40,6 +40,7 @@ Route::get('/buscar/resultados', [BusquedaController::class, 'search'])->name('b
 Route::get('/matching', [MatchingController::class, 'show'])->name('matching.show');
 Route::post('/matching/{perro}/like', [MatchingController::class, 'like'])->name('matching.like');
 Route::post('/matching/{perro}/dislike', [MatchingController::class, 'dislike'])->name('matching.dislike');
+Route::post('/matches', [App\Http\Controllers\MatchingController::class, 'store'])->name('matching.store');
 
 Route::get('/mensajes', [MensajeController::class, 'index'])->name('mensajes.index');
 Route::get('/mensajes/{matching}', [MensajeController::class, 'show'])->name('mensajes.show');
@@ -54,3 +55,10 @@ Route::post('/transacciones/{transaccion}/calificar', [CalificacionController::c
 Route::get('/mis-matches', [MatchingController::class, 'misMatches'])->name('matching.listado');
 
 Route::put('/perfil', [AuthController::class, 'updatePerfil'])->name('perfil.update');
+
+// Listado de matches
+Route::get('/matches', [App\Http\Controllers\MatchingController::class, 'listado'])->name('matching.listado');
+
+// Acciones de aceptar y rechazar
+Route::post('/matches/{matching}/aceptar', [App\Http\Controllers\MatchingController::class, 'aceptar'])->name('matching.aceptar');
+Route::post('/matches/{matching}/rechazar', [App\Http\Controllers\MatchingController::class, 'rechazar'])->name('matching.rechazar');
