@@ -52,3 +52,5 @@ Route::get('/transacciones/{transaccion}/calificar', [CalificacionController::cl
 Route::post('/transacciones/{transaccion}/calificar', [CalificacionController::class, 'store'])->name('calificaciones.store');
 
 Route::get('/mis-matches', [MatchingController::class, 'misMatches'])->name('matching.listado');
+
+Route::put('/perfil', [AuthController::class, 'updatePerfil'])->name('perfil.update');

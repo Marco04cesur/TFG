@@ -84,9 +84,42 @@ class AuthController extends Controller {
 public function editPerfil()
 {
     // Obtenemos el usuario autenticado
-    $user = auth()->user();
+    $usuario = auth()->user();
     
     // Retornamos la vista (que crearemos en el siguiente paso)
-    return view('auth.perfil', compact('user'));
+    return view('auth.perfil', compact('usuario'));
+}
+
+public function updatePerfil(Request $request)
+{
+    $usuario = auth()->user();
+
+    // Validamos los datos
+    $request->validate([
+        'nombre' => 'required|string|max:255',
+        'email' => 'required|email|unique:usuarios,email,' . $usuario->id,
+        'avatar' => 'nullable|image|max:2048'
+    ]);
+
+    // Subimos la foto si el usuario seleccionó una
+    if ($request->hasFile('avatar')) {
+        $path = $request->file('avatar')->store('avatars', 'public');
+        $usuario->avatar = $path;
+    }
+
+    // Actualizamos el resto de datos
+    $usuario->nombre = $request->nombre;
+    $usuario->email = $request->email;
+    $usuario->teléfono = $request->teléfono;
+    $usuario->ciudad = $request->ciudad;
+
+    // Si ha escrito una contraseña nueva, la encriptamos y la guardamos
+    if ($request->filled('contraseña')) {
+        $usuario->password = bcrypt($request->contraseña);
+    }
+
+    $usuario->save();
+
+    return back()->with('success', '¡Perfil actualizado correctamente!');
 }
 }
