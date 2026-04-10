@@ -104,14 +104,23 @@
 </style>
 
 <div class="page-header shadow-sm">
-    <div class="container d-flex justify-content-between align-items-center flex-wrap gap-3">
-        <div>
-            <h1 class="fw-bold mb-0">Mis Perros registrados 🐶</h1>
-            <p class="text-muted mb-0">Administra tus mascotas y su disponibilidad</p>
+    <div class="container">
+        <div class="d-flex justify-content-between align-items-center flex-wrap gap-3">
+            <div>
+                <h1 class="fw-bold mb-0">Mis Perros registrados 🐶</h1>
+                <p class="text-muted mb-0">Administra tus mascotas y su disponibilidad</p>
+            </div>
+            
+            <div class="d-flex gap-2">
+                <a href="{{ url('/dashboard') }}" class="btn btn-outline-secondary rounded-pill px-4 fw-bold shadow-sm d-flex align-items-center">
+                    <i class="fas fa-arrow-left me-2"></i> Dashboard
+                </a>
+
+                <a href="{{ route('perros.create') }}" class="btn btn-add-dog shadow">
+                    <i class="fas fa-plus me-2"></i> Registrar nuevo perro
+                </a>
+            </div>
         </div>
-        <a href="{{ route('perros.create') }}" class="btn btn-add-dog shadow">
-            <i class="fas fa-plus me-2"></i> Registrar nuevo perro
-        </a>
     </div>
 </div>
 

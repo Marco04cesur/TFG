@@ -25,12 +25,12 @@ class PerroController extends Controller {
             'edad' => 'required|integer|min:0',
             'peso' => 'required|numeric|min:0',
             'descripción' => 'nullable|string',
-            'foto' => 'nullable|image|max:2048', // Validación de imagen
+            'foto_url' => 'nullable|image|max:2048', // Validación de imagen
         ]);
 
         // Manejo de la foto
-        if ($request->hasFile('foto')) {
-            $path = $request->file('foto')->store('perros', 'public');
+        if ($request->hasFile('foto_url')) {
+            $path = $request->file('foto_url')->store('perros', 'public');
             $validated['foto_url'] = $path;
         }
 
