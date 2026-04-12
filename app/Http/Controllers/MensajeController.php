@@ -2,60 +2,65 @@
 namespace App\Http\Controllers;
 use App\Models\Matching;
 use App\Models\Mensaje;
+use App\Models\Perro;   
 use Illuminate\Http\Request;
 class MensajeController extends Controller {
-    public function index() {
-    $usuario = auth()->user();
-    
-    // 1. Obtenemos los IDs de TODOS los perros que me pertenecen
-    $misPerrosIds = $usuario->perros->pluck('id')->toArray();
+    public function index(){
+        // 1. Sacamos los IDs de todos los perros del usuario logueado
+        // (Usa 'usuario_id' o 'user_id' según cómo esté en tu base de datos)
+        $misPerrosIds = Perro::where('usuario_id', auth()->id())->pluck('id');
+        
+        // 2. Obtenemos solo los matches ACEPTADOS donde participe alguno de mis perros
+        $matches = Matching::with(['perro1', 'perro2']) // Traemos los datos de los perros para que cargue más rápido
+            ->where('estado', 'aceptado')
+            ->where(function($query) use ($misPerrosIds) {
+                $query->whereIn('perro_id_1', $misPerrosIds)
+                      ->orWhereIn('perro_id_2', $misPerrosIds);
+            })->get();
 
-    // 2. Buscamos los matches donde alguno de MIS perros sea participante
-    // Y usamos los nombres de columna correctos de tu DB: perro_id_1 y perro_id_2
-    $matchings = Matching::where(function($query) use ($misPerrosIds) {
-            $query->whereIn('perro_id_1', $misPerrosIds)
-                  ->orWhereIn('perro_id_2', $misPerrosIds);
-        })
-        ->where('estado', 'aceptado') // Solo los que son match real
-        ->with(['perro1', 'perro2']) // Cargar datos de los perros para la vista
-        ->get();
+        // 3. Enviamos la variable a la vista (¡Esto es lo que solucionará tu error!)
+        return view('mensajes.index', compact('matches'));
+    }
+    public function show(Matching $matching)
+    {
+        // 1. Verificamos quiénes son los perros de este match
+        $misPerrosIds = auth()->user()->perros->pluck('id');
 
-    return view('mensajes.index', compact('matchings', 'misPerrosIds'));
-}
-    public function show(Matching $matching) {
-    // Seguridad: Verificar que el usuario pertenece a este match
-    $misPerrosIds = auth()->user()->perros->pluck('id')->toArray();
-    if (!in_array($matching->perro_id_1, $misPerrosIds) && !in_array($matching->perro_id_2, $misPerrosIds)) {
-        abort(403);
+        // Si el usuario no es dueño de ninguno de los dos perros, lo echamos (por seguridad)
+        if (!$misPerrosIds->contains($matching->perro_id_1) && !$misPerrosIds->contains($matching->perro_id_2)) {
+            abort(403, 'No tienes permiso para ver este chat.');
+        }
+
+        // 2. Identificamos cuál es mi perro y cuál es el otro
+        if ($misPerrosIds->contains($matching->perro_id_1)) {
+            $miPerro = $matching->perro1;
+            $otroPerro = $matching->perro2;
+        } else {
+            $miPerro = $matching->perro2;
+            $otroPerro = $matching->perro1;
+        }
+
+        // 3. Cargamos los mensajes de este match (Asumiendo que tienes una relación 'mensajes' en el modelo Matching)
+        // Si no tienes la relación, puedes usar: Mensaje::where('matching_id', $matching->id)->orderBy('created_at', 'asc')->get();
+        $mensajes = $matching->mensajes()->orderBy('created_at', 'asc')->get();
+
+        return view('mensajes.show', compact('matching', 'miPerro', 'otroPerro', 'mensajes'));
     }
 
-    $mensajes = $matching->mensajes()->orderBy('created_at', 'asc')->get();
-    $mensajes = $matching->mensajes()->with('perroEmisor')->orderBy('created_at', 'asc')->get();
-    return view('mensajes.show', compact('matching', 'mensajes'));
-}
-    public function store(Request $request, Matching $matching) {
-    $validated = $request->validate([
-        'contenido' => 'required|string|max:1000',
-    ]);
+    public function store(Request $request, Matching $matching)
+    {
+        $request->validate([
+            'contenido' => 'required|string|max:1000',
+            'mi_perro_id' => 'required|exists:perros,id'
+        ]);
 
-    // Buscamos cuál de tus perros pertenece a este match
-    $miPerro = auth()->user()->perros()
-        ->where(function($query) use ($matching) {
-            $query->where('id', $matching->perro_id_1)
-                  ->orWhere('id', $matching->perro_id_2);
-        })->first();
+        // Guardamos el mensaje en la base de datos
+        // Asegúrate de que tu modelo Mensaje tenga esto en su $fillable
+        $matching->mensajes()->create([
+            'perro_emisor_id' => $request->mi_perro_id, // Quién envía el mensaje
+            'contenido' => $request->contenido
+        ]);
 
-    if (!$miPerro) {
-        abort(403, 'No tienes permiso para enviar mensajes en este match.');
+        return back(); // Recargamos la página para ver el nuevo mensaje
     }
-
-    // Guardamos el mensaje con el campo correcto: perro_emisor_id
-    \App\Models\Mensaje::create([
-        'matching_id' => $matching->id,
-        'perro_emisor_id' => $miPerro->id, // <--- ESTO ES LO QUE FALTABA
-        'contenido' => $validated['contenido'],
-    ]);
-
-    return redirect()->back()->with('success', 'Mensaje enviado');
-}
 }
