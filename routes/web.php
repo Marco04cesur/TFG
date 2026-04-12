@@ -62,3 +62,5 @@ Route::get('/matches', [App\Http\Controllers\MatchingController::class, 'listado
 // Acciones de aceptar y rechazar
 Route::post('/matches/{matching}/aceptar', [App\Http\Controllers\MatchingController::class, 'aceptar'])->name('matching.aceptar');
 Route::post('/matches/{matching}/rechazar', [App\Http\Controllers\MatchingController::class, 'rechazar'])->name('matching.rechazar');
+
+Route::get('/usuario/{id}', [App\Http\Controllers\UserController::class, 'show'])->name('usuarios.show');

@@ -110,9 +110,23 @@
             <p class="fs-4 mb-0"><i class="fas fa-map-marker-alt text-danger me-2"></i> {{ $perro->usuario->ciudad ?? 'Ciudad desconocida' }}</p>
         </div>
         
-        <div class="owner-badge">
-            <i class="fas fa-user me-2"></i> Dueño: <strong>{{ $perro->usuario->nombre ?? 'Desconocido' }}</strong>
-        </div>
+        @if($perro->usuario)
+            <a href="{{ route('usuarios.show', $perro->usuario->id) }}" class="owner-badge text-white text-decoration-none shadow-sm" style="transition: all 0.3s; cursor: pointer;">
+                <i class="fas fa-user-circle me-2"></i> Dueño: <strong>{{ $perro->usuario->nombre }}</strong>
+                <i class="fas fa-external-link-alt ms-2 small opacity-75"></i>
+            </a>
+            <style>
+                .owner-badge:hover { 
+                    background: rgba(255,255,255,0.3); 
+                    transform: translateY(-2px); 
+                    box-shadow: 0 5px 15px rgba(0,0,0,0.2) !important;
+                }
+            </style>
+        @else
+            <div class="owner-badge">
+                <i class="fas fa-user me-2"></i> Dueño: <strong>Desconocido</strong>
+            </div>
+        @endif
     </div>
 </div>
 
