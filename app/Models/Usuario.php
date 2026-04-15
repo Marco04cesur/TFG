@@ -25,12 +25,18 @@ class Usuario extends Authenticatable {
         'calificación',
     ];
 
-    protected $hidden = ['contraseña'];
+    protected $hidden = ['contraseña','remember_token',];
 
     // Indispensable: Laravel busca por defecto la columna 'password'
     // Como la tuya se llama 'contraseña', hay que avisarle:
     public function getAuthPassword() {
         return $this->contraseña;
+    }
+
+    // Le dice a Laravel cómo se llama tu columna en la base de datos
+    public function getAuthPasswordName()
+    {
+        return 'contraseña';
     }
 
     // Tus relaciones se quedan igual

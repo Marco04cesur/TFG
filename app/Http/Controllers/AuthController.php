@@ -18,14 +18,14 @@ class AuthController extends Controller {
     // 1. Validar datos
     $credentials = $request->validate([
         'email' => 'required|email',
-        'contraseña' => 'required|min:6',
+        'password' => 'required|min:6',
     ]);
 
     // 2. BUSCAR AL USUARIO (¡Esta es la línea que te falta!)
     $usuario = \App\Models\Usuario::where('email', $credentials['email'])->first();
 
     // 3. Verificar si existe y si la contraseña coincide
-    if (!$usuario || !\Illuminate\Support\Facades\Hash::check($credentials['contraseña'], $usuario->contraseña)) {
+    if (!$usuario || !\Illuminate\Support\Facades\Hash::check($credentials['password'], $usuario->contraseña)) {
         return back()->withErrors(['email' => 'Credenciales inválidas']);
     }
 
@@ -50,7 +50,7 @@ class AuthController extends Controller {
         $data = $request->validate([
             'nombre' => 'required|string|max:100',
             'email' => 'required|email|unique:usuarios',
-            'contraseña' => 'required|min:6|confirmed',
+            'password' => 'required|min:6|confirmed',
             'teléfono' => 'nullable|max:20',
             'ciudad' => 'nullable|max:100',
         ]);
@@ -98,7 +98,12 @@ public function updatePerfil(Request $request)
     $request->validate([
         'nombre' => 'required|string|max:255',
         'email' => 'required|email|unique:usuarios,email,' . $usuario->id,
-        'avatar' => 'nullable|image|max:2048'
+        'avatar' => 'nullable|image|max:2048',
+        'password' => 'nullable|min:6|confirmed'
+    ], [
+         // Mensajes de error personalizados (opcional pero recomendado)
+        'password.confirmed' => 'Las contraseñas no coinciden.',
+        'password.min' => 'La contraseña debe tener al menos 6 caracteres.'
     ]);
 
     // Subimos la foto si el usuario seleccionó una
@@ -112,14 +117,15 @@ public function updatePerfil(Request $request)
     $usuario->email = $request->email;
     $usuario->teléfono = $request->teléfono;
     $usuario->ciudad = $request->ciudad;
-
-    // Si ha escrito una contraseña nueva, la encriptamos y la guardamos
-    if ($request->filled('contraseña')) {
-        $usuario->password = bcrypt($request->contraseña);
-    }
-
     $usuario->save();
 
-    return back()->with('success', '¡Perfil actualizado correctamente!');
-}
+    // Si ha escrito una contraseña nueva, la encriptamos y la guardamos
+    if ($request->filled('password')) {
+            \App\Models\Usuario::where('id', $usuario->id)->update([
+                'contraseña' => bcrypt($request->password)
+            ]);
+        }
+
+        return back()->with('success', '¡Perfil actualizado correctamente!');
+    }
 }

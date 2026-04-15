@@ -222,7 +222,7 @@
 
                     <label class="form-label small fw-bold text-muted text-uppercase">Contraseña</label>
 
-                    <input type="password" name="contraseña" class="form-control" required placeholder="********">
+                    <input type="password" name="password" class="form-control" required placeholder="********">
 
                 </div>
 

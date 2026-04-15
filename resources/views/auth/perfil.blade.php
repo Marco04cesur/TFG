@@ -187,21 +187,39 @@
                                 @error('ciudad') <div class="invalid-feedback">{{ $message }}</div> @enderror
                             </div>
 
-                            <h5 class="fw-bold mb-0 text-muted border-bottom pb-2 mt-5">Seguridad</h5>
+                            <div class="accordion mb-4" id="accordionSeguridad">
+                                <div class="accordion-item" style="border-radius: 15px; overflow: hidden; border: 1px solid #e0e6ed; box-shadow: 0 4px 10px rgba(0,0,0,0.02);">
+                                    <h2 class="accordion-header" id="headingSeguridad">
+                                        <button class="accordion-button collapsed fw-bold" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSeguridad" aria-expanded="false" aria-controls="collapseSeguridad" style="background-color: #f8f9fa; color: #333;">
+                                            <i class="fas fa-shield-alt text-primary me-2"></i> Seguridad y Contraseña
+                                        </button>
+                                    </h2>
+                                    <div id="collapseSeguridad" class="accordion-collapse collapse" aria-labelledby="headingSeguridad" data-bs-parent="#accordionSeguridad">
+                                        <div class="accordion-body bg-white pt-4 pb-4">
+                                            
+                                            <p class="text-muted small mb-4"><i class="fas fa-info-circle me-1"></i> Si no deseas cambiar tu contraseña, deja estos campos en blanco.</p>
 
-                            <div class="col-12">
-                                <label class="form-label"><i class="fas fa-lock"></i> Nueva Contraseña <span class="text-muted text-lowercase fw-normal">(déjalo en blanco para mantener la actual)</span></label>
-                                <input type="password" name="password" class="form-control @error('password') is-invalid @enderror" placeholder="Solo si quieres cambiarla...">
-                                @error('password') <div class="invalid-feedback">{{ $message }}</div> @enderror
+                                            <div class="row g-3">
+                                                <div class="col-md-6">
+                                                    <label class="form-label fw-bold small text-muted text-uppercase">Nueva Contraseña</label>
+                                                    <input type="password" name="password" class="form-control @error('password') is-invalid @enderror" placeholder="Mínimo 6 caracteres">
+                                                    @error('password') <div class="invalid-feedback">{{ $message }}</div> @enderror
+                                                </div>
+
+                                                <div class="col-md-6">
+                                                    <label class="form-label fw-bold small text-muted text-uppercase">Confirmar Contraseña</label>
+                                                    <input type="password" name="password_confirmation" class="form-control" placeholder="Repite la nueva contraseña">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
-                        </div>
-
-                        <div class="d-flex justify-content-end mt-5 pt-3 border-top">
-                            <button type="submit" class="btn btn-save shadow-sm">
-                                <i class="fas fa-save me-2"></i> Guardar Cambios
-                            </button>
-                        </div>
-
+                            <div class="col-12 text-end mt-5 border-top pt-4">
+                                <button type="submit" class="btn btn-primary rounded-pill px-5 py-2 fw-bold shadow-sm" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border: none;">
+                                    <i class="fas fa-save me-2"></i> Guardar Todo
+                                </button>
+                            </div>
                     </form>
                 </div>
             </div>
