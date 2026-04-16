@@ -4,10 +4,10 @@ use App\Models\Matching;
 use App\Models\Mensaje;
 use App\Models\Perro;   
 use Illuminate\Http\Request;
+
 class MensajeController extends Controller {
     public function index(){
         // 1. Sacamos los IDs de todos los perros del usuario logueado
-        // (Usa 'usuario_id' o 'user_id' según cómo esté en tu base de datos)
         $misPerrosIds = Perro::where('usuario_id', auth()->id())->pluck('id');
         
         // 2. Obtenemos solo los matches ACEPTADOS donde participe alguno de mis perros
@@ -18,9 +18,10 @@ class MensajeController extends Controller {
                       ->orWhereIn('perro_id_2', $misPerrosIds);
             })->get();
 
-        // 3. Enviamos la variable a la vista (¡Esto es lo que solucionará tu error!)
+        // 3. Enviamos la variable a la vista 
         return view('mensajes.index', compact('matches'));
     }
+
     public function show(Matching $matching)
     {
         // 1. Verificamos quiénes son los perros de este match
@@ -40,8 +41,7 @@ class MensajeController extends Controller {
             $otroPerro = $matching->perro1;
         }
 
-        // 3. Cargamos los mensajes de este match (Asumiendo que tienes una relación 'mensajes' en el modelo Matching)
-        // Si no tienes la relación, puedes usar: Mensaje::where('matching_id', $matching->id)->orderBy('created_at', 'asc')->get();
+        // 3. Cargamos los mensajes de este match
         $mensajes = $matching->mensajes()->orderBy('created_at', 'asc')->get();
 
         return view('mensajes.show', compact('matching', 'miPerro', 'otroPerro', 'mensajes'));
@@ -55,7 +55,6 @@ class MensajeController extends Controller {
         ]);
 
         // Guardamos el mensaje en la base de datos
-        // Asegúrate de que tu modelo Mensaje tenga esto en su $fillable
         $matching->mensajes()->create([
             'perro_emisor_id' => $request->mi_perro_id, // Quién envía el mensaje
             'contenido' => $request->contenido

@@ -137,17 +137,27 @@
             <div class="row g-4">
                 @forelse($recibidas as $match)
                     <div class="col-md-6 col-lg-4">
-                        <div class="card match-card h-100 text-center">
+                        <div class="card match-card h-100 text-center d-flex flex-column">
                             <div class="duo-images">
-                                <img src="{{ $match->perro1->foto_url ? asset('storage/'.$match->perro1->foto_url) : asset('images/default-dog.png') }}" class="duo-img left" alt="Otro perro">
+                                <a href="{{ route('perros.show', $match->perro1) }}" title="Ver perfil de {{ $match->perro1->nombre }}">
+                                    <img src="{{ $match->perro1->foto_url ? asset('storage/'.$match->perro1->foto_url) : asset('images/default-dog.png') }}" class="duo-img left" alt="Otro perro" style="transition: transform 0.2s;" onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'">
+                                </a>
                                 <i class="fas fa-heart heart-center"></i>
                                 <img src="{{ $match->perro2->foto_url ? asset('storage/'.$match->perro2->foto_url) : asset('images/default-dog.png') }}" class="duo-img right" alt="Mi perro">
                             </div>
-                            <div class="card-body">
-                                <h5 class="fw-bold mb-1">¡{{ $match->perro1->nombre }} quiere conocer a {{ $match->perro2->nombre }}!</h5>
-                                <p class="text-muted small mb-4">De la ciudad de {{ $match->perro1->usuario->ciudad ?? 'Desconocida' }}</p>
+                            <div class="card-body d-flex flex-column">
+                                <h5 class="fw-bold mb-1">
+                                    ¡<a href="{{ route('perros.show', $match->perro1) }}" class="text-dark text-decoration-none" style="border-bottom: 2px dotted #FF6B35;">{{ $match->perro1->nombre }}</a> quiere conocer a {{ $match->perro2->nombre }}!
+                                </h5>
+                                <p class="text-muted small mb-3">De la ciudad de {{ $match->perro1->usuario->ciudad ?? 'Desconocida' }}</p>
                                 
-                                <div class="d-flex justify-content-center gap-3">
+                                <div class="mb-4">
+                                    <a href="{{ route('perros.show', $match->perro1) }}" class="btn btn-sm btn-outline-secondary rounded-pill px-3 fw-bold">
+                                        <i class="fas fa-search-plus me-1"></i> Inspeccionar Perfil
+                                    </a>
+                                </div>
+                                
+                                <div class="d-flex justify-content-center gap-3 mt-auto">
                                     <form action="{{ route('matching.rechazar', $match) }}" method="POST">
                                         @csrf
                                         <button type="submit" class="btn-action-circle bg-danger bg-opacity-10 text-danger shadow-sm" title="Rechazar">

@@ -21,7 +21,7 @@ class AuthController extends Controller {
         'password' => 'required|min:6',
     ]);
 
-    // 2. BUSCAR AL USUARIO (¡Esta es la línea que te falta!)
+    // 2. BUSCAR AL USUARIO POR EMAIL
     $usuario = \App\Models\Usuario::where('email', $credentials['email'])->first();
 
     // 3. Verificar si existe y si la contraseña coincide
@@ -33,7 +33,6 @@ class AuthController extends Controller {
     \Illuminate\Support\Facades\Auth::login($usuario);
     Auth::login($usuario);
 
-    // Añade estas dos líneas:
     session(['usuario_id' => $usuario->id, 'usuario' => $usuario]);
 
     // 5. Redirigir
@@ -79,14 +78,12 @@ class AuthController extends Controller {
         return redirect('/login');
     }
 
-    // app/Http/Controllers/AuthController.php
-
 public function editPerfil()
 {
     // Obtenemos el usuario autenticado
     $usuario = auth()->user();
     
-    // Retornamos la vista (que crearemos en el siguiente paso)
+    // Retornamos la vista 
     return view('auth.perfil', compact('usuario'));
 }
 
@@ -101,7 +98,7 @@ public function updatePerfil(Request $request)
         'avatar' => 'nullable|image|max:2048',
         'password' => 'nullable|min:6|confirmed'
     ], [
-         // Mensajes de error personalizados (opcional pero recomendado)
+         // Mensajes de error personalizados
         'password.confirmed' => 'Las contraseñas no coinciden.',
         'password.min' => 'La contraseña debe tener al menos 6 caracteres.'
     ]);

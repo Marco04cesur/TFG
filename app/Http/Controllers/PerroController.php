@@ -21,7 +21,7 @@ class PerroController extends Controller {
         $validated = $request->validate([
             'nombre' => 'required|string|max:255',
             'raza' => 'required|string|max:255',
-            'sexo' => 'required|in:M,H', // Ajustado a tu migración
+            'sexo' => 'required|in:M,H',
             'edad' => 'required|integer|min:0',
             'peso' => 'required|numeric|min:0',
             'descripción' => 'nullable|string',
@@ -45,7 +45,6 @@ class PerroController extends Controller {
     public function show(Perro $perro)
     {
         // Buscamos los perros del usuario logueado
-        // (Asegúrate de usar usuario_id o user_id según tu BD)
         $misPerros = Perro::where('usuario_id', auth()->id())->get();
         
         $matching = null;
@@ -69,14 +68,14 @@ class PerroController extends Controller {
         abort(403);
     }
 
-    // 2. Validar los datos (Asegúrate de que 'descripción' tenga tilde si así está en la DB)
+    // 2. Validar los datos
     $validated = $request->validate([
         'nombre' => 'required|string|max:255',
         'raza' => 'required|string|max:255',
         'sexo' => 'required|in:M,H',
         'edad' => 'required|integer|min:0',
         'peso' => 'required|numeric|min:0',
-        'descripción' => 'nullable|string', // <--- Revisa la tilde aquí
+        'descripción' => 'nullable|string',
         'foto' => 'nullable|image|max:2048',
     ]);
 
@@ -90,9 +89,7 @@ class PerroController extends Controller {
         $validated['foto_url'] = $path;
     }
 
-    // 4. EL PASO CRUCIAL: Actualizar
-    // Si usas $perro->update($validated), asegúrate de que 'descripción'
-    // esté en el array $fillable de tu modelo Perro.php
+    // 4. EL PASO CRUCIAL: Actualizar el perro con los datos validados
     $perro->update($validated);
 
     return redirect()->route('perros.index')->with('success', 'Perro actualizado correctamente');
@@ -104,7 +101,7 @@ class PerroController extends Controller {
         abort(403, 'No tienes permiso para eliminar este perro.');
     }
 
-    // Opcional: Borrar la foto del servidor si existe
+    // Borrar la foto del servidor si existe
     if ($perro->foto_url) {
         \Illuminate\Support\Facades\Storage::disk('public')->delete($perro->foto_url);
     }

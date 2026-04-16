@@ -3,6 +3,7 @@ namespace App\Http\Controllers;
 use App\Models\Calificacion;
 use App\Models\Transaccion;
 use Illuminate\Http\Request;
+
 class CalificacionController extends Controller {
     public function create(Transaccion $transaccion) {
         return view('calificaciones.create', compact('transaccion'));

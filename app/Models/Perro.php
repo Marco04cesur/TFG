@@ -16,7 +16,7 @@ class Perro extends Model
         'color', 
         'pedigree', 
         'foto_url', 
-        'descripción', // Asegúrate de que coincida con la migración
+        'descripción',
         'disponible'
     ];
 

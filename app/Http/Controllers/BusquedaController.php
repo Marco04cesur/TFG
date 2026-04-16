@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Perro; // Asegúrate de importar el modelo Perro
+use App\Models\Perro;
 
 class BusquedaController extends Controller
 {
@@ -13,7 +13,7 @@ class BusquedaController extends Controller
         // y que NO sean los del propio usuario logueado.
         $query = Perro::where('disponible', true)
                       ->where('usuario_id', '!=', auth()->id()); 
-                      // Ojo: si tu columna de dueño se llama 'user_id', cámbialo arriba.
+                      
 
         // 2. Filtro por Raza (si el usuario escribió algo)
         if ($request->filled('raza')) {
