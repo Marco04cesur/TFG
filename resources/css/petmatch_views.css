@@ -1,0 +1,143 @@
+/* =========================================
+   VISTAS DE AUTENTICACIÓN (Login / Registro)
+   ========================================= */
+
+.auth-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    padding: 2rem;
+    background-color: var(--bg-main);
+}
+
+.auth-card {
+    width: 100%;
+    max-width: 420px;
+    padding: 3rem 2.5rem;
+    text-align: center;
+    background-color: #FFFFFF;
+    border-radius: var(--border-radius-card);
+    box-shadow: var(--shadow-soft);
+}
+
+.auth-icon {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+    color: var(--golden-glow); /* Un toque dorado en la huellita */
+}
+
+.auth-title {
+    font-size: 1.75rem;
+    font-weight: 700;
+    margin-bottom: 2.00rem;
+    margin-top: -3.00rem;
+    color: var(--deep-forest);
+}
+
+.auth-subtitle {
+    color: var(--sea-green);
+    margin-bottom: 2.5rem;
+    font-size: 0.95rem;
+    font-weight: 500;
+}
+
+.auth-form {
+    text-align: left;
+}
+
+.auth-form .form-group {
+    margin-bottom: 1.5rem;
+}
+
+.auth-form .form-label {
+    font-weight: 600;
+    font-size: 0.85rem;
+    margin-bottom: 0.5rem;
+    display: block;
+    color: var(--deep-forest);
+}
+
+.btn-w-full {
+    width: 100%;
+    padding: 0.8rem;
+    font-weight: 600;
+    font-size: 1rem;
+    border-radius: 50px;
+    margin-top: 1rem;
+}
+
+.auth-link {
+    margin-top: 1.5rem;
+    font-size: 0.9rem;
+    color: var(--text-dark);
+}
+
+.auth-link a {
+    font-weight: 600;
+    text-decoration: none;
+    transition: color 0.3s;
+    color: var(--tiger-orange);
+}
+
+.auth-link a:hover {
+    color: var(--pure-red); /* El enlace cambia a Pure Red al pasar el ratón */
+}
+
+/* Estilos para el logo en el Login */
+.auth-logo-container {
+    margin-bottom: 1.5rem;
+    display: flex;
+    justify-content: center;
+}
+
+.auth-logo {
+    max-width: 200px; /* Ajusta el tamaño a tu gusto */
+    height: auto;
+    border-radius: 12px; /* Para que las esquinas del logo sean suaves */
+}
+
+/* Retoque opcional para que la tarjeta no quede muy pegada al logo */
+.auth-card {
+    padding-top: 2rem; /* Un poco más de espacio arriba */
+}
+
+/* =========================================
+   DASHBOARD Y BÚSQUEDA
+   ========================================= */
+
+.page-header {
+    background-color: var(--deep-forest);
+    color: white;
+    padding: 3rem 0;
+    margin-bottom: 3rem;
+    border-radius: 0 0 30px 30px;
+    box-shadow: var(--shadow-soft);
+    position: relative;
+}
+
+.page-header .text-muted {
+    color: var(--sea-green) !important;
+    opacity: 0.9;
+}
+
+.stat-card, .dog-card {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    height: 100%;
+}
+
+.stat-card:hover, .dog-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 30px rgba(3, 71, 50, 0.2) !important;
+}
+
+.quick-action-btn {
+    transition: all 0.2s ease;
+}
+
+.quick-action-btn:hover {
+    background-color: var(--golden-glow) !important;
+    border-color: var(--golden-glow);
+    color: var(--deep-forest) !important;
+    transform: translateY(-2px);
+}
