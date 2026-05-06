@@ -23,6 +23,7 @@ class Usuario extends Authenticatable {
         'longitud',
         'verificado',
         'calificación',
+        'avatar',
     ];
 
     protected $hidden = ['contraseña','remember_token',];

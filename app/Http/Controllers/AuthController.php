@@ -5,6 +5,7 @@ use App\Models\Usuario;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
 
 class AuthController extends Controller {
     
@@ -116,13 +117,21 @@ public function updatePerfil(Request $request)
     $usuario->ciudad = $request->ciudad;
     $usuario->save();
 
+    
     // Si ha escrito una contraseña nueva, la encriptamos y la guardamos
     if ($request->filled('password')) {
             \App\Models\Usuario::where('id', $usuario->id)->update([
                 'contraseña' => bcrypt($request->password)
             ]);
         }
-
-        return back()->with('success', '¡Perfil actualizado correctamente!');
+    // --- SOLUCIÓN AL NOMBRE EN EL DASHBOARD ---
+    // Si estás usando la sesión 'usuario', actualízala con los nuevos datos
+    if (session()->has('usuario')) {
+        session(['usuario' => $usuario]);
     }
+
+    return back()->with('success', 'Perfil actualizado correctamente.');
+    }
+    
+    
 }

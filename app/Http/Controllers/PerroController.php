@@ -8,10 +8,25 @@ use Illuminate\Support\Facades\Storage; // Importante para las fotos
 
 class PerroController extends Controller {
 
-    public function index() {
+    public function index(Request $request) {
         $perros = auth()->user()->perros;
-        return view('perros.index', compact('perros'));
+        $query = Perro::where('usuario_id', auth()->id());
+
+    // Filtrar por raza si existe en la petición
+    if ($request->filled('raza')) {
+        $query->where('raza', 'LIKE', '%' . $request->raza . '%');
     }
+
+    // Filtrar por sexo si existe en la petición
+    if ($request->filled('sexo')) {
+        $query->where('sexo', $request->sexo);
+    }
+
+    $perros = $query->get();
+
+    return view('perros.index', compact('perros'));
+    }
+
 
     public function create() {
         return view('perros.create');

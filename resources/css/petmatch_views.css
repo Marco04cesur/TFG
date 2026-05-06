@@ -103,41 +103,47 @@
 }
 
 /* =========================================
-   DASHBOARD Y BÚSQUEDA
+   header común para vistas de búsqueda y perfil
+     (Dashboard, Búsqueda, Perfil)
    ========================================= */
 
 .page-header {
     background-color: var(--deep-forest);
     color: white;
-    padding: 3rem 0;
-    margin-bottom: 3rem;
-    border-radius: 0 0 30px 30px;
-    box-shadow: var(--shadow-soft);
-    position: relative;
+    padding: 4rem 0 6rem 0;
+    text-align: left;
+    border-radius: 0;
 }
 
-.page-header .text-muted {
-    color: var(--sea-green) !important;
-    opacity: 0.9;
-}
+.header-logo-box {
+        background-color: white;
+        padding: 10px;
+        border-radius: 0; /* Logo también en cuadro recto */
+        display: inline-block;
+    }
 
-.stat-card, .dog-card {
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    height: 100%;
-}
+    .dash-card {
+        transition: transform 0.3s ease;
+        border-radius: 0; /* Cuadros generales rectos */
+        text-decoration: none;
+        color: inherit;
+        display: block;
+        height: 100%;
+        border: 1px solid rgba(0,0,0,0.05);
+    }
+    
+    .dash-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1) !important;
+        border-color: var(--sea-green);
+    }
 
-.stat-card:hover, .dog-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 15px 30px rgba(3, 71, 50, 0.2) !important;
-}
-
-.quick-action-btn {
-    transition: all 0.2s ease;
-}
-
-.quick-action-btn:hover {
-    background-color: var(--golden-glow) !important;
-    border-color: var(--golden-glow);
-    color: var(--deep-forest) !important;
-    transform: translateY(-2px);
-}
+    .icon-box {
+        width: 60px; 
+        height: 60px; 
+        border-radius: 0; /* Iconos en cuadros rectos */
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 1.5rem;
+    }

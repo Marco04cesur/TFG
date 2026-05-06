@@ -1,118 +1,135 @@
 @extends('layouts.app')
 
 @section('content')
+
+<!-- Estilo exclusivo para el hover de las tarjetitas de los perros -->
 <style>
-    body { background-color: #f4f7f6; }
-    
-    .owner-header {
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        padding: 60px 0 80px;
-        border-radius: 0 0 40px 40px;
-        color: white;
-        text-align: center;
-    }
-
-    .owner-avatar {
-        width: 130px;
-        height: 130px;
-        border-radius: 50%;
-        border: 5px solid white;
-        box-shadow: 0 10px 25px rgba(0,0,0,0.15);
-        object-fit: cover;
-        margin-top: -65px;
-        background-color: white;
-    }
-
-    .owner-card {
-        background: white;
-        border-radius: 20px;
-        box-shadow: 0 10px 30px rgba(0,0,0,0.05);
-        padding: 30px;
-        margin-top: -50px;
-        position: relative;
-        z-index: 10;
-        text-align: center;
-    }
-
-    .dog-mini-card {
-        border-radius: 15px;
-        overflow: hidden;
-        box-shadow: 0 5px 15px rgba(0,0,0,0.05);
-        transition: transform 0.3s;
-        border: none;
+    .dog-mini-card-link {
+        display: block;
         text-decoration: none;
         color: inherit;
-        display: block;
-        background: white;
+        border-radius: 20px;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
     }
-
-    .dog-mini-card:hover {
+    
+    .dog-mini-card-link:hover {
         transform: translateY(-5px);
-        box-shadow: 0 10px 20px rgba(0,0,0,0.1);
-        color: inherit;
-    }
-
-    .dog-mini-img {
-        width: 100%;
-        height: 180px;
-        object-fit: cover;
+        box-shadow: 0 15px 30px rgba(0, 129, 72, 0.15) !important;
     }
 </style>
 
-<div style="position: absolute; top: 20px; left: 20px; z-index: 20;">
-    <a href="{{ url()->previous() }}" class="btn btn-light rounded-pill px-4 fw-bold shadow-sm text-primary">
-        <i class="fas fa-arrow-left me-2"></i> Volver
-    </a>
-</div>
-
-<div class="owner-header">
+<!-- CABECERA DEL DUEÑO (Deep Forest con Logo y Botones) -->
+<div class="page-header" style="background-color: var(--deep-forest); padding: 3rem 0 7rem 0; text-align: left;">
     <div class="container">
-        <h2 class="fw-bold mb-0">Perfil del Dueño</h2>
+        <div class="row align-items-center">
+            
+            <!-- Izquierda: Logo y Textos -->
+            <div class="col-lg-6 d-flex align-items-center gap-4">
+                <div class="shadow-sm d-none d-sm-block" style="background-color: white; padding: 12px; border-radius: 18px;">
+                    <img src="{{ asset('images/petmatch_logo_modoclaro.png') }}" alt="PetMatch Logo" style="height: 60px; width: auto; display: block;">
+                </div>
+                
+                <div>
+                    <h1 class="mb-1" style="font-weight: 800; color: white; letter-spacing: -1px;">Perfil del Dueño</h1>
+                    <p class="mb-0 fs-5" style="color: rgba(255, 255, 255, 0.85); font-weight: 500;">Conoce más sobre {{ $usuario->nombre }}</p>
+                </div>
+            </div>
+            
+            <!-- Derecha: Botonera (Volver y Dashboard) -->
+            <div class="col-lg-6 mt-4 mt-lg-0 d-flex gap-2 justify-content-lg-end flex-wrap">
+                
+                <a href="{{ url()->previous() }}" class="btn btn-outline-light rounded-pill px-3 py-2 fw-bold d-flex align-items-center" style="border-width: 2px;">
+                    <i class="fas fa-arrow-left me-2"></i> Volver
+                </a>
+
+                <a href="{{ url('/dashboard') }}" class="btn btn-outline-light rounded-pill px-3 py-2 fw-bold d-flex align-items-center" style="border-width: 2px; background-color: rgba(255,255,255,0.1);">
+                    <i class="fas fa-home me-2"></i> Inicio
+                </a>
+                
+            </div>
+            
+        </div>
     </div>
 </div>
 
-<div class="container mb-5">
+<!-- CONTENEDOR PRINCIPAL -->
+<div class="container mb-5" style="margin-top: -4rem; position: relative; z-index: 10;">
     <div class="row justify-content-center">
         <div class="col-lg-8">
             
-            <div class="owner-card mb-5">
-                @if($usuario->avatar)
-                    <img src="{{ asset('storage/' . $usuario->avatar) }}" class="owner-avatar mb-3" alt="Avatar">
-                @else
-                    <img src="https://ui-avatars.com/api/?name={{ urlencode($usuario->nombre) }}&background=764ba2&color=fff&size=150" class="owner-avatar mb-3" alt="Avatar">
-                @endif
+            <!-- TARJETA DEL USUARIO -->
+            <div class="stat-card p-4 p-md-5 text-center border-0 shadow-lg mb-5" style="border-radius: 24px;">
                 
-                <h3 class="fw-bold mb-1">{{ $usuario->nombre }}</h3>
-                <p class="text-muted fs-5 mb-3">
-                    <i class="fas fa-map-marker-alt text-danger me-1"></i> {{ $usuario->ciudad ?? 'Ciudad no especificada' }}
+                <!-- Avatar Flotante -->
+                <div class="position-relative d-inline-block mb-4" style="margin-top: -85px;">
+                    @if($usuario->avatar)
+                        <img src="{{ asset('storage/' . $usuario->avatar) }}" class="rounded-circle object-fit-cover shadow-lg" style="width: 140px; height: 140px; border: 6px solid white;" alt="Avatar de {{ $usuario->nombre }}">
+                    @else
+                        <!-- Fondo verde Deep Forest para avatares genéricos -->
+                        <img src="https://ui-avatars.com/api/?name={{ urlencode($usuario->nombre) }}&background=034732&color=fff&size=150&bold=true" class="rounded-circle shadow-lg" style="width: 140px; height: 140px; border: 6px solid white;" alt="Avatar Genérico">
+                    @endif
+                </div>
+                
+                <h2 class="fw-bold mb-2" style="color: var(--deep-forest); letter-spacing: -1px; font-size: 2.2rem;">{{ $usuario->nombre }}</h2>
+                
+                <p class="fs-5 text-muted mb-4">
+                    <i class="fas fa-map-marker-alt me-2" style="color: var(--pure-red);"></i> {{ $usuario->ciudad ?? 'Ciudad no especificada' }}
                 </p>
-                <div class="d-inline-block bg-light rounded-pill px-4 py-2 text-muted fw-bold small">
-                    <i class="fas fa-paw me-2 text-primary"></i> Miembro de PetMatch
+                
+                <!-- Insignia de Miembro -->
+                <div class="d-inline-flex align-items-center rounded-pill px-4 py-2 fw-bold small" style="background-color: rgba(0, 129, 72, 0.05); color: var(--sea-green); border: 1px solid rgba(0, 129, 72, 0.1);">
+                    <i class="fas fa-paw me-2" style="color: var(--tiger-orange);"></i> Miembro de PetMatch
                 </div>
             </div>
 
-            <h4 class="fw-bold mb-4 border-bottom pb-2">Los peludos de {{ $usuario->nombre }}</h4>
+            <!-- TÍTULO: SUS PERROS -->
+            <div class="d-flex justify-content-between align-items-end mb-4 mt-5 border-bottom pb-3" style="border-color: rgba(0, 129, 72, 0.1) !important;">
+                <h4 class="fw-bold mb-0" style="color: var(--deep-forest);">Los peludos de {{ $usuario->nombre }}</h4>
+            </div>
 
+            <!-- CUADRÍCULA DE SUS PERROS -->
             <div class="row g-4">
                 @forelse($perros as $perro)
                     <div class="col-md-6">
-                        <a href="{{ route('perros.show', $perro) }}" class="dog-mini-card">
-                            @if($perro->foto_url)
-                                <img src="{{ asset('storage/' . $perro->foto_url) }}" class="dog-mini-img" alt="{{ $perro->nombre }}">
-                            @else
-                                <img src="{{ asset('images/default-dog.png') }}" class="dog-mini-img" style="background: #eee;">
-                            @endif
-                            <div class="p-3 text-center">
-                                <h5 class="fw-bold mb-1">{{ $perro->nombre }} 
-                                    @if($perro->sexo == 'M') <i class="fas fa-mars text-primary"></i> @else <i class="fas fa-venus text-danger"></i> @endif
-                                </h5>
-                                <p class="text-muted small mb-0">{{ $perro->raza }} • {{ $perro->edad }} años</p>
+                        <a href="{{ route('perros.show', $perro) }}" class="dog-mini-card-link stat-card h-100 border-0 overflow-hidden shadow-sm">
+                            
+                            <!-- Foto del Perro -->
+                            <div style="height: 220px; background-color: var(--bg-secondary); position: relative;">
+                                @if($perro->foto_url)
+                                    <img src="{{ asset('storage/' . $perro->foto_url) }}" class="w-100 h-100 object-fit-cover" alt="{{ $perro->nombre }}">
+                                @else
+                                    <div class="w-100 h-100 d-flex align-items-center justify-content-center">
+                                        <i class="fas fa-dog fa-4x" style="color: var(--camel); opacity: 0.5;"></i>
+                                    </div>
+                                @endif
+                                
+                                <!-- Icono de sexo superpuesto -->
+                                <div class="position-absolute bottom-0 end-0 m-3 d-flex align-items-center justify-content-center rounded-circle shadow-sm" 
+                                     style="background-color: white; width: 35px; height: 35px;">
+                                    <i class="fas fa-{{ $perro->sexo == 'M' ? 'mars' : 'venus' }}" style="color: {{ $perro->sexo == 'M' ? 'var(--deep-forest)' : 'var(--tiger-orange)' }}; font-size: 1.1rem;"></i>
+                                </div>
                             </div>
+                            
+                            <!-- Info del Perro -->
+                            <div class="p-4 text-center">
+                                <h4 class="fw-bold mb-1" style="color: var(--deep-forest); letter-spacing: -0.5px;">
+                                    {{ $perro->nombre }} 
+                                </h4>
+                                <p class="small text-uppercase fw-bold mb-0" style="color: var(--sea-green); letter-spacing: 1px;">
+                                    {{ $perro->raza }} <span class="text-muted mx-1">&bull;</span> {{ $perro->edad }} años
+                                </p>
+                            </div>
+
                         </a>
                     </div>
                 @empty
-                    <div class="col-12 text-center py-4">
-                        <p class="text-muted">Parece que no hay perros disponibles en este momento.</p>
+                    <!-- ESTADO VACÍO -->
+                    <div class="col-12 text-center py-5">
+                        <div class="d-inline-flex align-items-center justify-content-center rounded-circle mb-3" style="width: 80px; height: 80px; background-color: var(--bg-secondary);">
+                            <i class="fas fa-search fa-2x" style="color: var(--sea-green); opacity: 0.5;"></i>
+                        </div>
+                        <h5 class="fw-bold text-muted mb-0">No hay perros registrados</h5>
+                        <p class="text-muted small mt-2">Parece que este usuario aún no ha añadido mascotas.</p>
                     </div>
                 @endforelse
             </div>
