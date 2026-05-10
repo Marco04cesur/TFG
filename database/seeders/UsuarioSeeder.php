@@ -13,7 +13,7 @@ class UsuarioSeeder extends Seeder
      */
     public function run(): void
     {
-        // Si quieres crear perros para los usuarios que YA existen en la BD:
+        // Para crear perros en los usuarios que ya existenS
     $usuarios = Usuario::all();
 
     foreach ($usuarios as $usuario) {

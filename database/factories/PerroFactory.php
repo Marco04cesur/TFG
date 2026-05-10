@@ -23,7 +23,6 @@ class PerroFactory extends Factory
             'sexo' => fake()->randomElement(['M', 'H']),
             'descripción' => fake()->sentence(10),
             'disponible' => true,
-            // Foto cuadrada y con tus colores corporativos (Deep Forest)
             'foto_url' => "https://placehold.jp/40/034732/ffffff/400x400.png?text=GUAU",
             'usuario_id' => Usuario::all()->random()->id, // Asigna un dueño aleatorio de los existentes
         ];

@@ -38,19 +38,11 @@ Route::get('/buscar', [BusquedaController::class, 'index'])->name('busqueda.inde
 Route::get('/buscar/resultados', [BusquedaController::class, 'search'])->name('busqueda.search');
 
 Route::get('/matching', [MatchingController::class, 'show'])->name('matching.show');
-Route::post('/matching/{perro}/like', [MatchingController::class, 'like'])->name('matching.like');
-Route::post('/matching/{perro}/dislike', [MatchingController::class, 'dislike'])->name('matching.dislike');
 Route::post('/matches', [App\Http\Controllers\MatchingController::class, 'store'])->name('matching.store');
 
 Route::get('/mensajes', [MensajeController::class, 'index'])->name('mensajes.index');
 Route::get('/mensajes/{matching}', [MensajeController::class, 'show'])->name('mensajes.show');
 Route::post('/mensajes/{matching}', [MensajeController::class, 'store'])->name('mensajes.store');
-
-Route::post('/transacciones/crear', [TransaccionController::class, 'create'])->name('transacciones.create');
-Route::post('/transacciones/{transaccion}/aceptar', [TransaccionController::class, 'accept'])->name('transacciones.accept');
-
-Route::get('/transacciones/{transaccion}/calificar', [CalificacionController::class, 'create'])->name('calificaciones.create');
-Route::post('/transacciones/{transaccion}/calificar', [CalificacionController::class, 'store'])->name('calificaciones.store');
 
 Route::get('/mis-matches', [MatchingController::class, 'misMatches'])->name('matching.listado');
 

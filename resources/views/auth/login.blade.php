@@ -9,6 +9,15 @@
     
     <h2 class="auth-title">Bienvenido a PetMatch</h2>
     <p class="auth-subtitle">Gestiona las citas de tus mascotas</p>
+
+    @if ($errors->has('email') || $errors->has('password') || session('error'))
+            <div class="mb-4 p-3 d-flex align-items-center gap-3" style="background-color: #fff5f5; border: 1px solid #feb2b2; border-left: 5px solid var(--pure-red); border-radius: 0;">
+                <i class="fas fa-exclamation-triangle" style="color: var(--pure-red);"></i>
+                <span class="small fw-bold" style="color: #c53030; text-transform: uppercase; letter-spacing: 0.5px;">
+                    El correo o la contraseña son incorrectos.
+                </span>
+            </div>
+        @endif
     
     <form method="POST" action="{{ route('login') }}" class="auth-form">
       @csrf 

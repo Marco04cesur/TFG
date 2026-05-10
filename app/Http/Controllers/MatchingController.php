@@ -70,7 +70,7 @@ class MatchingController extends Controller {
                 'estado' => 'pendiente' // Puede ser pendiente, aceptado o rechazado
             ]);
 
-            return back()->with('success', '¡Solicitud de match enviada! Ahora toca cruzar los dedos 🐾');
+            return back()->with('success', '¡Solicitud de match enviada! Ahora toca cruzar los dedos');
         }
 
         // Muestra la lista de matches

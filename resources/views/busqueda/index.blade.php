@@ -172,7 +172,6 @@
     </div>
 
     <!-- PAGINACIÓN -->
-
 <div class="pagination-container mt-5 mb-5">
     {{ $perros->links() }}
 </div>

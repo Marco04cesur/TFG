@@ -3,7 +3,6 @@
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
-// ESTA ES LA LÍNEA CORRECTA:
 use Illuminate\Pagination\Paginator; 
 
 class AppServiceProvider extends ServiceProvider
