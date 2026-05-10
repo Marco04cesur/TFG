@@ -3,6 +3,8 @@
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
+// ESTA ES LA LÍNEA CORRECTA:
+use Illuminate\Pagination\Paginator; 
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -19,6 +21,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+        // Esto activará los estilos de Bootstrap para tus flechas gigantes
+        Paginator::useBootstrapFive();
     }
 }

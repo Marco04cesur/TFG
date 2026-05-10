@@ -16,7 +16,7 @@ class Usuario extends Authenticatable {
     protected $fillable = [
         'nombre',
         'email',
-        'contraseña',
+        'password',
         'teléfono',
         'ciudad',
         'latitud',
@@ -26,18 +26,18 @@ class Usuario extends Authenticatable {
         'avatar',
     ];
 
-    protected $hidden = ['contraseña','remember_token',];
+    protected $hidden = ['password','remember_token',];
 
     // Indispensable: Laravel busca por defecto la columna 'password'
     // Como le he llamado contraseña 'contraseña', hay que avisarle:
     public function getAuthPassword() {
-        return $this->contraseña;
+        return $this->password;
     }
 
     // Le dice a Laravel cómo se llama la columna en la base de datos
     public function getAuthPasswordName()
     {
-        return 'contraseña';
+        return 'password';
     }
 
     // Las relaciones se quedan igual
@@ -50,7 +50,7 @@ class Usuario extends Authenticatable {
     }
 
     // El mutador para el hash
-    public function setContraseñaAttribute($value) {
-        $this->attributes['contraseña'] = Hash::make($value);
+    public function setPasswordAttribute($value) {
+        $this->attributes['password'] = Hash::make($value);
     }
 }

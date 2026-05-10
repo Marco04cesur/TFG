@@ -97,3 +97,68 @@ main {
 .text-accent {
     color: var(--accent-color) !important;
 }
+
+/* CONTENEDOR PRINCIPAL DE PAGINACIÓN */
+.pagination-container nav {
+    display: flex !important;
+    flex-direction: column !important; /* Texto arriba, botones abajo */
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 20px; /* Espacio entre el texto y los números */
+    margin-top: 40px;
+}
+
+/* ELIMINAR EL DISEÑO DE "LÍNEA" POR DEFECTO DE BOOTSTRAP */
+.pagination-container nav div:first-child {
+    display: none !important; /* Ocultamos la versión móvil duplicada */
+}
+
+.pagination-container nav div:last-child {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    width: 100%;
+}
+
+/* ESTILO DEL TEXTO "SHOWING..." */
+.pagination-container p.text-sm {
+    color: rgba(255, 255, 255, 0.6) !important;
+    text-transform: uppercase !important;
+    letter-spacing: 3px !important;
+    font-size: 0.7rem !important;
+    font-weight: 700 !important;
+    margin-bottom: 0 !important; /* Quitamos el margen inferior para controlarlo con el gap */
+}
+
+/* RESALTAR LOS NÚMEROS EN NARANJA */
+.pagination-container p.text-sm span {
+    color: var(--tiger-orange) !important;
+    font-weight: 900 !important;
+    padding: 0 4px;
+    border-bottom: 1px solid var(--tiger-orange); /* Subrayado fino muy elegante */
+}
+
+/* AJUSTE DE LOS BOTONES VERDES */
+.pagination {
+    margin: 0 !important;
+    display: flex !important;
+    list-style: none !important;
+    padding: 0 !important;
+}
+
+.pagination .page-item .page-link {
+    background-color: var(--sea-green) !important;
+    border: none !important;
+    color: white !important;
+    border-radius: 0 !important; /* Recto total */
+    margin: 0 3px;
+    padding: 10px 18px;
+    font-weight: 800;
+    transition: all 0.3s ease;
+}
+
+/* PÁGINA ACTIVA EN NARANJA */
+.pagination .page-item.active .page-link {
+    background-color: var(--tiger-orange) !important;
+    transform: scale(1.1); /* Hacemos que la página actual resalte un poco más */
+}

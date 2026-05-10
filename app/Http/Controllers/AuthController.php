@@ -26,7 +26,7 @@ class AuthController extends Controller {
     $usuario = \App\Models\Usuario::where('email', $credentials['email'])->first();
 
     // 3. Verificar si existe y si la contraseña coincide
-    if (!$usuario || !\Illuminate\Support\Facades\Hash::check($credentials['password'], $usuario->contraseña)) {
+    if (!$usuario || !\Illuminate\Support\Facades\Hash::check($credentials['password'], $usuario->password)) {
         return back()->withErrors(['email' => 'Credenciales inválidas']);
     }
 
@@ -121,7 +121,7 @@ public function updatePerfil(Request $request)
     // Si ha escrito una contraseña nueva, la encriptamos y la guardamos
     if ($request->filled('password')) {
             \App\Models\Usuario::where('id', $usuario->id)->update([
-                'contraseña' => bcrypt($request->password)
+                'password' => bcrypt($request->password)
             ]);
         }
     // --- SOLUCIÓN AL NOMBRE EN EL DASHBOARD ---

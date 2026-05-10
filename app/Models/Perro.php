@@ -3,9 +3,13 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Perro extends Model
 {
+    use HasFactory;
+    protected $table = 'perros';
+    
     protected $fillable = [
         'usuario_id', 
         'nombre', 

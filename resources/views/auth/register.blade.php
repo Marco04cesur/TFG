@@ -57,14 +57,14 @@
                     <label class="form-label">
                         <i class="fas fa-lock"></i> Contraseña
                     </label>
-                    <input type="password" name="contraseña" class="form-control" required placeholder="********">
+                    <input type="password" name="password" class="form-control" required placeholder="********">
                 </div>
 
                 <div class="col-md-6 form-group">
                     <label class="form-label">
                         <i class="fas fa-lock"></i> Confirmar Contraseña
                     </label>
-                    <input type="password" name="contraseña_confirmation" class="form-control" required placeholder="********">
+                    <input type="password" name="password_confirmation" class="form-control" required placeholder="********">
                 </div>
             </div>
 

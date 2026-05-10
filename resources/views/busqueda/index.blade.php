@@ -172,10 +172,10 @@
     </div>
 
     <!-- PAGINACIÓN -->
-    @if(method_exists($perros, 'links'))
-        <div class="d-flex justify-content-center mt-5">
-            {{ $perros->links() }}
-        </div>
-    @endif
+
+<div class="pagination-container mt-5 mb-5">
+    {{ $perros->links() }}
 </div>
+</div>
+
 @endsection
